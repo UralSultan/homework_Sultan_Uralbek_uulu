@@ -18,5 +18,9 @@
     <p>Детальное описание не указано.</p>
 {% endif %}
 
+<div>
+        <a role="button" href="{% url 'task_update' task.pk %}" class="btn-solid theme-success">Обновить</a>
+</div>
+
 <p><a href="{% url 'task_list' %}">Назад к списку</a></p>
 {% endblock %}

@@ -18,6 +18,9 @@
                 {% else %}
                     Дата выполнения не указана
                 {% endif %}
+                        <div>
+                        <a role="button" href="{% url 'task_update' task.pk %}" class="btn-solid theme-success">Обновить</a>
+                        </div>
                 <form method="post" action="{% url 'task_delete' task.id %}">
                     {% csrf_token %}
                     <button type="submit">Удалить</button>
