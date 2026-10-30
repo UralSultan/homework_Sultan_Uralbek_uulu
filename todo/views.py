@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+
+from .forms import TaskForm
 from .models import Task, STATUS_CHOICES
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -8,15 +10,21 @@ def task_list(request):
     return render(request, 'todo/task_list.html', {'tasks': tasks})
 
 def task_add(request):
-    if request.method == 'POST':
-        task = Task.objects.create(
-            description=request.POST.get('description', ''),
-            status=request.POST.get('status', 'new'),
-            due_date=request.POST.get('due_date') or None,
-            detail_descriptions=request.POST.get('detail_descriptions') or None,
-        )
-        return HttpResponseRedirect(reverse('task_detail', kwargs={'task_id': task.pk}))
-    return render(request, 'todo/task_form.html', {'status_choices': STATUS_CHOICES})
+    if request.method == 'GET':
+            form = TaskForm()
+            return render(request, "todo/task_form.html", {'form': form})
+    elif request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = Task.objects.create(
+                description=request.POST.get('description', ''),
+                status=request.POST.get('status', 'new'),
+                due_date=request.POST.get('due_date') or None,
+                detail_descriptions=request.POST.get('detail_descriptions') or None,
+            )
+            return HttpResponseRedirect(reverse('task_detail', kwargs={'task_id': task.pk}))
+        else:
+            return render(request, "todo/task_form.html", {'form': form})
 
 def task_delete(request, task_id):
     if request.method == 'POST':
