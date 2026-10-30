@@ -1,33 +1,6 @@
 <form method="post">
     {% csrf_token %}
-
-    <p>
-        <label for="description">Описание:</label><br>
-            <textarea id="description" name="description" rows="4" required>{{ task.description|default_if_none:'' }}</textarea></p>
-
-    <p>
-        <label for="detail_descriptions">Детальное описание:</label><br>
-        <textarea id="detail_descriptions" name="detail_descriptions" rows="4">{{ task.detail_descriptions|default_if_none:'' }}</textarea>
-    </p>
-
-    <p>
-        <label for="status">Статус:</label><br>
-        <select id="status" name="status">
-            {% for value, label in status_choices %}
-                <option value="{{ value }}"
-                    {% if task and task.status == value or not task and value == 'new' %}selected{% endif %}>
-                    {{ label }}
-                </option>
-            {% endfor %}
-        </select>
-    </p>
-
-    <p>
-        <label for="due_date">Дата выполнения:</label><br>
-        <input id="due_date" type="date" name="due_date" value="{{ task.due_date|date:'Y-m-d' }}">
-        <br><small>Можно оставить пустым.</small>
-    </p>
-
-        <button type="submit">{{ button_value }}</button>
+    {{ form.as_p }}
+    <button type="submit">{{ button_value }}</button>
 </form>
 <p><a href="{% url 'task_list' %}">Вернуться к списку</a></p>
