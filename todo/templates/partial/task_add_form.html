@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ button_value }}</button>
+</form>
+<p><a href="{% url 'task_list' %}">Вернуться к списку</a></p>

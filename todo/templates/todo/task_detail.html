@@ -1,0 +1,26 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}{{ task.description }}{% endblock %}
+
+{% block content %}
+<h1>{{ task.description }}</h1>
+
+<p>Статус: {{ task.get_status_display }}</p>
+
+{% if task.due_date %}
+    <p>Выполнить до: {{ task.due_date|date:'d.m.Y' }}</p>
+{% endif %}
+
+{% if task.detail_descriptions %}
+    <h2>Детальное описание</h2>
+    <pre style="white-space: pre-wrap;">{{ task.detail_descriptions }}</pre>
+{% else %}
+    <p>Детальное описание не указано.</p>
+{% endif %}
+
+<div>
+        <a role="button" href="{% url 'task_update' task.pk %}" class="btn-solid theme-success">Обновить</a>
+</div>
+
+<p><a href="{% url 'task_list' %}">Назад к списку</a></p>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}Обновить задачу{% endblock %}
+
+{% block content %}
+<h1 xmlns="http://www.w3.org/1999/html">Обновить задачу</h1>
+{% include 'partial/task_add_form.html' with button_value="Обновить" %}
+{% endblock %}
